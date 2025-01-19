@@ -44,7 +44,7 @@
     h1 {
       font-size: 2.5rem;
       margin-bottom: 20px;
-      text-shadow: 0 0 10px #FFA500, 0 0 20px #FF8C00, 0 0 30px #FF8C00; /* Glowing effect for the title */
+      text-shadow: 0 0 15px #FFA500, 0 0 25px #FF8C00, 0 0 35px #FF8C00; /* Enhanced glowing effect for the title */
       color: #FFA500; /* Orangey color */
       text-align: center;
     }
@@ -54,11 +54,11 @@
       max-font-size: 60px; /* Maximum font size for larger screens */
       min-font-size: 24px; /* Minimum font size for smaller screens */
       text-align: center;
-      color: #FFA500; /* Orangey color */
-      text-shadow: 0 0 10px #FFA500, 0 0 20px #FF8C00, 0 0 30px #FF8C00; /* Glowing effect */
-      padding: 10px 20px;
+      color: #FFAA00; /* Brighter orangey color for better contrast */
+      text-shadow: 0 0 20px #FFAA00, 0 0 30px #FF8C00, 0 0 40px #FF8C00; /* Enhanced glowing effect */
+      padding: 15px 25px;
       border-radius: 10px;
-      background: rgba(0, 0, 0, 0.5); /* Semi-transparent background for better readability */
+      background: rgba(0, 0, 0, 0.6); /* Slightly darker semi-transparent background for better readability */
     }
 
     /* Responsive adjustments */
@@ -71,18 +71,20 @@
         font-size: 6vw; /* Adjust font size for smaller screens */
         max-font-size: 40px;
         min-font-size: 20px;
+        padding: 12px 20px;
       }
     }
 
     @media (max-width: 480px) {
       h1 {
-        font-size: 1.5rem;
+        font-size: 1.8rem;
       }
 
       #countdown {
         font-size: 8vw; /* Further adjust for very small screens */
         max-font-size: 32px;
         min-font-size: 18px;
+        padding: 10px 18px;
       }
     }
   </style>
