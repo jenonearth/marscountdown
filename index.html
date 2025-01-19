@@ -5,8 +5,8 @@
   <title>Mars Countdown</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Ensures responsiveness on mobile devices -->
   
-  <!-- Importing Orbitron and Press Start 2P fonts from Google Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Press+Start+2P&display=swap" rel="stylesheet"> 
+  <!-- Importing Orbitron and Baumans fonts from Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Baumans&display=swap" rel="stylesheet"> 
   
   <style>
     /* Reset default margins and paddings */
@@ -53,7 +53,7 @@
     }
 
     #countdown {
-      font-family: 'Press Start 2P', cursive; /* Retro sci-fi font */
+      font-family: 'Baumans', cursive; /* Retro sci-fi font */
       font-size: 4vw; /* Responsive font size */
       max-font-size: 60px; /* Maximum font size for larger screens */
       min-font-size: 24px; /* Minimum font size for smaller screens */
@@ -70,7 +70,7 @@
       /* If you prefer no shadow at all, you can omit the box-shadow property */
     }
 
-    /* Glowing animation (optional, can be removed if undesired) */
+    /* Optional: Subtle glow animation for countdown (commented out) */
     /* @keyframes glow {
       0% {
         text-shadow: 0 0 20px #FFAA00, 0 0 30px #FF8C00, 0 0 40px #FF8C00;
@@ -189,78 +189,4 @@
 
       draw() {
         const x = Math.sin(this.timePassed) * this.orbitRadius + this.orbitX;
-        const y = Math.cos(this.timePassed) * this.orbitRadius / 2 + this.orbitY;
-        const twinkle = random(10);
-
-        if (twinkle === 1 && this.alpha > 0) {
-          this.alpha -= 0.05;
-        } else if (twinkle === 2 && this.alpha < 1) {
-          this.alpha += 0.05;
-        }
-
-        ctx.globalAlpha = this.alpha;
-        ctx.drawImage(canvas2, x - this.radius / 2, y - this.radius / 2, this.radius, this.radius);
-        this.timePassed += this.speed;
-      }
-    }
-
-    for (let i = 0; i < maxStars; i++) {
-      new Star();
-    }
-
-    function animation() {
-      ctx.globalCompositeOperation = "source-over";
-      ctx.globalAlpha = 0.8;
-      ctx.fillStyle = `hsla(${hue}, 64%, 6%, 1)`;
-      ctx.fillRect(0, 0, width, height);
-
-      ctx.globalCompositeOperation = "lighter";
-      for (let i = 1, l = stars.length; i < l; i++) {
-        stars[i].draw();
-      }
-
-      window.requestAnimationFrame(animation);
-    }
-
-    animation();
-
-    // Resize listener to keep canvas full screen
-    window.addEventListener("resize", () => {
-      width = canvas.width = window.innerWidth;
-      height = canvas.height = window.innerHeight;
-      stars.length = 0; // Clear the stars array
-      count = 0;
-      for (let i = 0; i < maxStars; i++) {
-        new Star();
-      }
-    });
-  </script>
-
-  <!-- Countdown JavaScript -->
-  <script>
-    const launchDate = new Date('2026-12-01T10:00:00Z');
-    const countdownEl = document.getElementById('countdown');
-
-    function updateCountdown() {
-      const now = new Date().getTime();
-      const distance = launchDate - now;
-
-      if (distance < 0) {
-        countdownEl.textContent = "LAUNCHED!";
-        return;
-      }
-
-      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-      const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-      const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-      countdownEl.textContent = `${days}d ${hours}h ${minutes}m ${seconds}s`;
-    }
-
-    // Update every second
-    setInterval(updateCountdown, 1000);
-    updateCountdown();
-  </script>
-</body>
-</html>
+   
