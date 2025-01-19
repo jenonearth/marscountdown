@@ -1,27 +1,34 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <title>Mars Countdown</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Ensures responsiveness on mobile devices -->
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet"> <!-- Importing Orbitron font -->
   <style>
+    /* Reset default margins and paddings */
+    *, *::before, *::after {
+      box-sizing: border-box;
+    }
+
     html, body {
       margin: 0;
       padding: 0;
       overflow: hidden; /* Prevent scrollbars if the starfield extends beyond window */
+      width: 100%;
+      height: 100%;
+      font-family: 'Orbitron', sans-serif; /* A futuristic Google Font */
+      background: #000; /* Black background for space */
+      position: relative;
+      z-index: 1; /* Ensure content is above the starfield */
     }
 
     body {
-      background: #000;
-      color: #0ff; /* Sci-fi glow color */
-      font-family: 'Orbitron', sans-serif; /* A futuristic Google Font */
       display: flex;
       justify-content: center;
       align-items: center;
-      height: 100vh;
-      margin: 0;
       flex-direction: column;
-      position: relative;
-      z-index: 1; /* Content is above the starfield */
+      color: #FFA500; /* Orangey color for the countdown */
     }
 
     /* The starfield canvas */
@@ -29,13 +36,54 @@
       position: fixed;
       top: 0;
       left: 0;
+      width: 100%;
+      height: 100%;
       z-index: -1; /* Make sure it's behind the countdown content */
     }
 
-    #countdown {
-      font-size: 3rem;
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 20px;
+      text-shadow: 0 0 10px #FFA500, 0 0 20px #FF8C00, 0 0 30px #FF8C00; /* Glowing effect for the title */
+      color: #FFA500; /* Orangey color */
       text-align: center;
-      text-shadow: 0 0 5px #0ff, 0 0 10px #0ff, 0 0 20px #0ff;
+    }
+
+    #countdown {
+      font-size: 4vw; /* Responsive font size */
+      max-font-size: 60px; /* Maximum font size for larger screens */
+      min-font-size: 24px; /* Minimum font size for smaller screens */
+      text-align: center;
+      color: #FFA500; /* Orangey color */
+      text-shadow: 0 0 10px #FFA500, 0 0 20px #FF8C00, 0 0 30px #FF8C00; /* Glowing effect */
+      padding: 10px 20px;
+      border-radius: 10px;
+      background: rgba(0, 0, 0, 0.5); /* Semi-transparent background for better readability */
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+      h1 {
+        font-size: 2rem;
+      }
+
+      #countdown {
+        font-size: 6vw; /* Adjust font size for smaller screens */
+        max-font-size: 40px;
+        min-font-size: 20px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      h1 {
+        font-size: 1.5rem;
+      }
+
+      #countdown {
+        font-size: 8vw; /* Further adjust for very small screens */
+        max-font-size: 32px;
+        min-font-size: 18px;
+      }
     }
   </style>
 </head>
@@ -45,33 +93,33 @@
 
   <!-- Main Content -->
   <h1>Mars Countdown</h1>
-  <div id="countdown"></div>
+  <div id="countdown">Loading...</div>
 
   <!-- Starfield JavaScript -->
   <script>
     // Reference to the canvas
-    var c = document.getElementById("space");
-    var ctx = c.getContext("2d");
+    const canvas = document.getElementById("space");
+    const ctx = canvas.getContext("2d");
 
     // Set width & height to fill the window
-    var w = c.width = window.innerWidth;
-    var h = c.height = window.innerHeight;
+    let width = canvas.width = window.innerWidth;
+    let height = canvas.height = window.innerHeight;
 
-    var hue = 217;
-    var stars = [];
-    var count = 0;
-    var maxStars = 600; // Adjust for performance if needed
+    const hue = 217;
+    const stars = [];
+    let count = 0;
+    const maxStars = 600; // Adjust for performance if needed
 
     // Create a second smaller canvas for the star image
-    var canvas2 = document.createElement("canvas");
-    var ctx2 = canvas2.getContext("2d");
+    const canvas2 = document.createElement("canvas");
+    const ctx2 = canvas2.getContext("2d");
     canvas2.width = 100;
     canvas2.height = 100;
-    var half = canvas2.width / 2;
-    var gradient2 = ctx2.createRadialGradient(half, half, 0, half, half, half);
+    const half = canvas2.width / 2;
+    const gradient2 = ctx2.createRadialGradient(half, half, 0, half, half, half);
     gradient2.addColorStop(0.025, "#fff");
-    gradient2.addColorStop(0.1, "hsl(" + hue + ", 61%, 33%)");
-    gradient2.addColorStop(0.25, "hsl(" + hue + ", 64%, 6%)");
+    gradient2.addColorStop(0.1, `hsl(${hue}, 61%, 33%)`);
+    gradient2.addColorStop(0.25, `hsl(${hue}, 64%, 6%)`);
     gradient2.addColorStop(1, "transparent");
 
     ctx2.fillStyle = gradient2;
@@ -85,7 +133,7 @@
         min = 0;
       }
       if (min > max) {
-        var hold = max;
+        let hold = max;
         max = min;
         min = hold;
       }
@@ -93,51 +141,53 @@
     }
 
     function maxOrbit(x, y) {
-      var max = Math.max(x, y);
-      var diameter = Math.round(Math.sqrt(max * max + max * max));
+      const max = Math.max(x, y);
+      const diameter = Math.round(Math.sqrt(max * max + max * max));
       return diameter / 2;
     }
 
-    var Star = function() {
-      this.orbitRadius = random(maxOrbit(w, h));
-      this.radius = random(60, this.orbitRadius) / 8;
-      this.orbitX = w / 2;
-      this.orbitY = h / 2;
-      this.timePassed = random(0, maxStars);
-      this.speed = random(this.orbitRadius) / 500000;
-      this.alpha = random(2, 10) / 10;
-      count++;
-      stars[count] = this;
-    };
-
-    Star.prototype.draw = function() {
-      var x = Math.sin(this.timePassed) * this.orbitRadius + this.orbitX;
-      var y = Math.cos(this.timePassed) * this.orbitRadius / 2 + this.orbitY;
-      var twinkle = random(10);
-
-      if (twinkle === 1 && this.alpha > 0) {
-        this.alpha -= 0.05;
-      } else if (twinkle === 2 && this.alpha < 1) {
-        this.alpha += 0.05;
+    class Star {
+      constructor() {
+        this.orbitRadius = random(maxOrbit(width, height));
+        this.radius = random(60, this.orbitRadius) / 8;
+        this.orbitX = width / 2;
+        this.orbitY = height / 2;
+        this.timePassed = random(0, maxStars);
+        this.speed = random(this.orbitRadius) / 500000;
+        this.alpha = random(2, 10) / 10;
+        count++;
+        stars[count] = this;
       }
 
-      ctx.globalAlpha = this.alpha;
-      ctx.drawImage(canvas2, x - this.radius / 2, y - this.radius / 2, this.radius, this.radius);
-      this.timePassed += this.speed;
-    };
+      draw() {
+        const x = Math.sin(this.timePassed) * this.orbitRadius + this.orbitX;
+        const y = Math.cos(this.timePassed) * this.orbitRadius / 2 + this.orbitY;
+        const twinkle = random(10);
 
-    for (var i = 0; i < maxStars; i++) {
+        if (twinkle === 1 && this.alpha > 0) {
+          this.alpha -= 0.05;
+        } else if (twinkle === 2 && this.alpha < 1) {
+          this.alpha += 0.05;
+        }
+
+        ctx.globalAlpha = this.alpha;
+        ctx.drawImage(canvas2, x - this.radius / 2, y - this.radius / 2, this.radius, this.radius);
+        this.timePassed += this.speed;
+      }
+    }
+
+    for (let i = 0; i < maxStars; i++) {
       new Star();
     }
 
     function animation() {
       ctx.globalCompositeOperation = "source-over";
       ctx.globalAlpha = 0.8;
-      ctx.fillStyle = "hsla(" + hue + ", 64%, 6%, 1)";
-      ctx.fillRect(0, 0, w, h);
+      ctx.fillStyle = `hsla(${hue}, 64%, 6%, 1)`;
+      ctx.fillRect(0, 0, width, height);
 
       ctx.globalCompositeOperation = "lighter";
-      for (var i = 1, l = stars.length; i < l; i++) {
+      for (let i = 1, l = stars.length; i < l; i++) {
         stars[i].draw();
       }
 
@@ -147,12 +197,12 @@
     animation();
 
     // Resize listener to keep canvas full screen
-    window.addEventListener("resize", function() {
-      w = c.width = window.innerWidth;
-      h = c.height = window.innerHeight;
-      stars = [];
+    window.addEventListener("resize", () => {
+      width = canvas.width = window.innerWidth;
+      height = canvas.height = window.innerHeight;
+      stars.length = 0; // Clear the stars array
       count = 0;
-      for (var i = 0; i < maxStars; i++) {
+      for (let i = 0; i < maxStars; i++) {
         new Star();
       }
     });
@@ -162,23 +212,25 @@
   <script>
     const launchDate = new Date('2026-12-01T10:00:00Z');
     const countdownEl = document.getElementById('countdown');
-    
+
     function updateCountdown() {
       const now = new Date().getTime();
       const distance = launchDate - now;
-      
+
+      if (distance < 0) {
+        countdownEl.textContent = "LAUNCHED!";
+        return;
+      }
+
       const days = Math.floor(distance / (1000 * 60 * 60 * 24));
       const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
       const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
       const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-      
+
       countdownEl.textContent = `${days}d ${hours}h ${minutes}m ${seconds}s`;
-      
-      if (distance < 0) {
-        countdownEl.textContent = "LAUNCHED!";
-      }
     }
 
+    // Update every second
     setInterval(updateCountdown, 1000);
     updateCountdown();
   </script>
