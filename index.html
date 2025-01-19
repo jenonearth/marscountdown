@@ -4,7 +4,10 @@
   <meta charset="UTF-8">
   <title>Mars Countdown</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Ensures responsiveness on mobile devices -->
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet"> <!-- Importing Orbitron font -->
+  
+  <!-- Importing Orbitron and Press Start 2P fonts from Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Press+Start+2P&display=swap" rel="stylesheet"> 
+  
   <style>
     /* Reset default margins and paddings */
     *, *::before, *::after {
@@ -28,7 +31,7 @@
       justify-content: center;
       align-items: center;
       flex-direction: column;
-      color: #FFA500; /* Orangey color for the countdown */
+      color: #FFA500; /* Orangey color for the title */
     }
 
     /* The starfield canvas */
@@ -50,16 +53,39 @@
     }
 
     #countdown {
+      font-family: 'Press Start 2P', cursive; /* Retro sci-fi font */
       font-size: 4vw; /* Responsive font size */
       max-font-size: 60px; /* Maximum font size for larger screens */
       min-font-size: 24px; /* Minimum font size for smaller screens */
       text-align: center;
       color: #FFAA00; /* Brighter orangey color for better contrast */
-      text-shadow: 0 0 20px #FFAA00, 0 0 30px #FF8C00, 0 0 40px #FF8C00; /* Enhanced glowing effect */
+      /* Removed text-shadow to improve readability */
       padding: 15px 25px;
       border-radius: 10px;
       background: rgba(0, 0, 0, 0.6); /* Slightly darker semi-transparent background for better readability */
+      font-weight: 700; /* Bold font */
+      border: 2px solid rgba(255, 170, 0, 0.5); /* Semi-transparent orange border */
+      /* Optional: Add subtle border glow if desired */
+      /* box-shadow: 0 0 10px rgba(255, 170, 0, 0.5); */
+      /* If you prefer no shadow at all, you can omit the box-shadow property */
     }
+
+    /* Glowing animation (optional, can be removed if undesired) */
+    /* @keyframes glow {
+      0% {
+        text-shadow: 0 0 20px #FFAA00, 0 0 30px #FF8C00, 0 0 40px #FF8C00;
+      }
+      50% {
+        text-shadow: 0 0 25px #FFAA00, 0 0 35px #FF8C00, 0 0 45px #FF8C00;
+      }
+      100% {
+        text-shadow: 0 0 20px #FFAA00, 0 0 30px #FF8C00, 0 0 40px #FF8C00;
+      }
+    }
+
+    #countdown {
+      animation: glow 2s infinite alternate; /* Subtle glow animation */
+    } */
 
     /* Responsive adjustments */
     @media (max-width: 768px) {
