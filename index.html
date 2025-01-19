@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Mars Countdown</title>
+  <style>
+    body {
+      background: #000;
+      color: #0ff; /* Sci-fi glow color */
+      font-family: 'Orbitron', sans-serif; /* A futuristic Google Font */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      flex-direction: column;
+    }
+    #countdown {
+      font-size: 3rem;
+      text-align: center;
+      text-shadow: 0 0 5px #0ff, 0 0 10px #0ff, 0 0 20px #0ff;
+    }
+  </style>
+</head>
+<body>
+  <h1>Mars Countdown</h1>
+  <div id="countdown"></div>
+
+  <script>
+    const launchDate = new Date('2026-12-01T10:00:00Z');
+    const countdownEl = document.getElementById('countdown');
+    
+    function updateCountdown() {
+      const now = new Date().getTime();
+      const distance = launchDate - now;
+      
+      // Time calculations
+      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+      
+      // Display
+      countdownEl.textContent = `
+        ${days}d ${hours}h ${minutes}m ${seconds}s
+      `;
+      
+      // If the count down is over, display something else
+      if (distance < 0) {
+        countdownEl.textContent = "LAUNCHED!";
+      }
+    }
+
+    // Update every second
+    setInterval(updateCountdown, 1000);
+    updateCountdown();
+  </script>
+</body>
+</html>
