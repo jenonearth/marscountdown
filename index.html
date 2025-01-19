@@ -4,6 +4,12 @@
   <meta charset="UTF-8">
   <title>Mars Countdown</title>
   <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      overflow: hidden; /* Prevent scrollbars if the starfield extends beyond window */
+    }
+
     body {
       background: #000;
       color: #0ff; /* Sci-fi glow color */
@@ -14,7 +20,18 @@
       height: 100vh;
       margin: 0;
       flex-direction: column;
+      position: relative;
+      z-index: 1; /* Content is above the starfield */
     }
+
+    /* The starfield canvas */
+    #space {
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: -1; /* Make sure it's behind the countdown content */
+    }
+
     #countdown {
       font-size: 3rem;
       text-align: center;
@@ -23,9 +40,125 @@
   </style>
 </head>
 <body>
+  <!-- Starfield Canvas -->
+  <canvas id="space"></canvas>
+
+  <!-- Main Content -->
   <h1>Mars Countdown</h1>
   <div id="countdown"></div>
 
+  <!-- Starfield JavaScript -->
+  <script>
+    // Reference to the canvas
+    var c = document.getElementById("space");
+    var ctx = c.getContext("2d");
+
+    // Set width & height to fill the window
+    var w = c.width = window.innerWidth;
+    var h = c.height = window.innerHeight;
+
+    var hue = 217;
+    var stars = [];
+    var count = 0;
+    var maxStars = 600; // Adjust for performance if needed
+
+    // Create a second smaller canvas for the star image
+    var canvas2 = document.createElement("canvas");
+    var ctx2 = canvas2.getContext("2d");
+    canvas2.width = 100;
+    canvas2.height = 100;
+    var half = canvas2.width / 2;
+    var gradient2 = ctx2.createRadialGradient(half, half, 0, half, half, half);
+    gradient2.addColorStop(0.025, "#fff");
+    gradient2.addColorStop(0.1, "hsl(" + hue + ", 61%, 33%)");
+    gradient2.addColorStop(0.25, "hsl(" + hue + ", 64%, 6%)");
+    gradient2.addColorStop(1, "transparent");
+
+    ctx2.fillStyle = gradient2;
+    ctx2.beginPath();
+    ctx2.arc(half, half, half, 0, Math.PI * 2);
+    ctx2.fill();
+
+    function random(min, max) {
+      if (arguments.length < 2) {
+        max = min;
+        min = 0;
+      }
+      if (min > max) {
+        var hold = max;
+        max = min;
+        min = hold;
+      }
+      return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
+
+    function maxOrbit(x, y) {
+      var max = Math.max(x, y);
+      var diameter = Math.round(Math.sqrt(max * max + max * max));
+      return diameter / 2;
+    }
+
+    var Star = function() {
+      this.orbitRadius = random(maxOrbit(w, h));
+      this.radius = random(60, this.orbitRadius) / 8;
+      this.orbitX = w / 2;
+      this.orbitY = h / 2;
+      this.timePassed = random(0, maxStars);
+      this.speed = random(this.orbitRadius) / 500000;
+      this.alpha = random(2, 10) / 10;
+      count++;
+      stars[count] = this;
+    };
+
+    Star.prototype.draw = function() {
+      var x = Math.sin(this.timePassed) * this.orbitRadius + this.orbitX;
+      var y = Math.cos(this.timePassed) * this.orbitRadius / 2 + this.orbitY;
+      var twinkle = random(10);
+
+      if (twinkle === 1 && this.alpha > 0) {
+        this.alpha -= 0.05;
+      } else if (twinkle === 2 && this.alpha < 1) {
+        this.alpha += 0.05;
+      }
+
+      ctx.globalAlpha = this.alpha;
+      ctx.drawImage(canvas2, x - this.radius / 2, y - this.radius / 2, this.radius, this.radius);
+      this.timePassed += this.speed;
+    };
+
+    for (var i = 0; i < maxStars; i++) {
+      new Star();
+    }
+
+    function animation() {
+      ctx.globalCompositeOperation = "source-over";
+      ctx.globalAlpha = 0.8;
+      ctx.fillStyle = "hsla(" + hue + ", 64%, 6%, 1)";
+      ctx.fillRect(0, 0, w, h);
+
+      ctx.globalCompositeOperation = "lighter";
+      for (var i = 1, l = stars.length; i < l; i++) {
+        stars[i].draw();
+      }
+
+      window.requestAnimationFrame(animation);
+    }
+
+    animation();
+
+    // Resize listener to keep canvas full screen
+    window.addEventListener("resize", function() {
+      w = c.width = window.innerWidth;
+      h = c.height = window.innerHeight;
+      stars = [];
+      count = 0;
+      for (var i = 0; i < maxStars; i++) {
+        new Star();
+      }
+    });
+  </script>
+
+  <!-- Countdown JavaScript -->
   <script>
     const launchDate = new Date('2026-12-01T10:00:00Z');
     const countdownEl = document.getElementById('countdown');
@@ -34,24 +167,18 @@
       const now = new Date().getTime();
       const distance = launchDate - now;
       
-      // Time calculations
       const days = Math.floor(distance / (1000 * 60 * 60 * 24));
       const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
       const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
       const seconds = Math.floor((distance % (1000 * 60)) / 1000);
       
-      // Display
-      countdownEl.textContent = `
-        ${days}d ${hours}h ${minutes}m ${seconds}s
-      `;
+      countdownEl.textContent = `${days}d ${hours}h ${minutes}m ${seconds}s`;
       
-      // If the count down is over, display something else
       if (distance < 0) {
         countdownEl.textContent = "LAUNCHED!";
       }
     }
 
-    // Update every second
     setInterval(updateCountdown, 1000);
     updateCountdown();
   </script>
