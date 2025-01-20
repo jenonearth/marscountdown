@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Mars Countdown</title>
+  <title>Mars Countdown - Simplified Test</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
   <!-- Importing Orbitron font from Google Fonts -->
@@ -192,4 +192,38 @@
     // Update star positions
     function updateStars() {
       for (let star of stars) {
-      
+        star.x += star.dx;
+        star.y += star.dy;
+
+        // Wrap around the screen
+        if (star.x < 0) star.x = width;
+        if (star.x > width) star.x = 0;
+        if (star.y < 0) star.y = height;
+        if (star.y > height) star.y = 0;
+      }
+    }
+
+    // Animation loop
+    function animate() {
+      drawStars();
+      updateStars();
+      requestAnimationFrame(animate);
+    }
+
+    animate();
+  </script>
+
+  <!-- Simplified Countdown JavaScript for Testing -->
+  <script>
+    const countdownEl = document.getElementById('countdown');
+
+    function updateCountdown() {
+      countdownEl.textContent = "10d 10h 10m 10s"; // Static countdown for testing
+    }
+
+    // Update every second
+    setInterval(updateCountdown, 1000);
+    updateCountdown();
+  </script>
+</body>
+</html>
