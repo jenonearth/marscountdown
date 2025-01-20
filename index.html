@@ -42,24 +42,24 @@
       left: 0;
       width: 100%;
       height: 100%;
-      z-index: -1; /* Make sure it's behind the countdown content */
+      z-index: -2; /* Behind both Mars and content */
     }
 
-    /* Mars Planet Styling */
+    /* Glowing Mars-like planet */
     .mars {
       position: fixed;
-      top: 20px;
-      left: 20px;
-      width: 120px;
-      height: 120px;
-      background: radial-gradient(circle at 40% 40%, #d67c3c, #b55a2f, #8c4421);
+      top: 10%; /* Adjusted to place in top-left quadrant */
+      left: 10%; /* Adjusted to place in top-left quadrant */
+      width: 300px; /* Increased size */
+      height: 300px; /* Increased size */
+      background: radial-gradient(circle at 30% 30%, #ff4500, #8b0000);
       border-radius: 50%;
-      box-shadow: inset -5px -5px 15px rgba(0,0,0,0.5), 5px 5px 15px rgba(255, 165, 0, 0.3);
-      z-index: 0; /* Ensure it's above the starfield but below main content */
-      animation: rotateMars 20s linear infinite; /* Optional: Slow rotation */
+      box-shadow: 0 0 30px 15px rgba(255, 69, 0, 0.5); /* Enhanced glow */
+      z-index: -1; /* Behind content but above the starfield */
+      animation: rotateMars 25s linear infinite; /* Slower rotation */
     }
 
-    /* Optional Rotation Animation for Mars */
+    /* Mars rotation animation */
     @keyframes rotateMars {
       from {
         transform: rotate(0deg);
@@ -83,10 +83,21 @@
     }
 
     /* Responsive adjustments */
+    @media (max-width: 1024px) {
+      .mars {
+        width: 250px;
+        height: 250px;
+        top: 8%;
+        left: 8%;
+      }
+    }
+
     @media (max-width: 768px) {
       .mars {
-        width: 90px;
-        height: 90px;
+        width: 200px;
+        height: 200px;
+        top: 6%;
+        left: 6%;
       }
 
       h1 {
@@ -100,8 +111,10 @@
 
     @media (max-width: 480px) {
       .mars {
-        width: 70px;
-        height: 70px;
+        width: 150px;
+        height: 150px;
+        top: 5%;
+        left: 5%;
       }
 
       h1 {
@@ -118,7 +131,7 @@
   <!-- Starfield Canvas -->
   <canvas id="starfield"></canvas>
 
-  <!-- Mars Planet -->
+  <!-- Glowing Mars-like Planet -->
   <div class="mars"></div>
 
   <!-- Main Content -->
@@ -145,7 +158,7 @@
 
     // Star properties
     let stars = [];
-    const maxStars = 200; // Number of stars
+    const maxStars = 300; // Increased number of stars for denser background
 
     // Create star objects
     function createStars() {
@@ -155,8 +168,8 @@
           y: Math.random() * height,
           radius: Math.random() * 1.5 + 0.5,
           alpha: Math.random(),
-          dx: (Math.random() - 0.5) * 0.3,
-          dy: (Math.random() - 0.5) * 0.3
+          dx: (Math.random() - 0.5) * 0.5, // Increased movement speed slightly
+          dy: (Math.random() - 0.5) * 0.5
         });
       }
     }
@@ -179,52 +192,4 @@
     // Update star positions
     function updateStars() {
       for (let star of stars) {
-        star.x += star.dx;
-        star.y += star.dy;
-
-        // Wrap around the screen
-        if (star.x < 0) star.x = width;
-        if (star.x > width) star.x = 0;
-        if (star.y < 0) star.y = height;
-        if (star.y > height) star.y = 0;
-      }
-    }
-
-    // Animation loop
-    function animate() {
-      drawStars();
-      updateStars();
-      requestAnimationFrame(animate);
-    }
-
-    animate();
-  </script>
-
-  <!-- Countdown JavaScript -->
-  <script>
-    const launchDate = new Date('2026-12-01T10:00:00Z');
-    const countdownEl = document.getElementById('countdown');
-
-    function updateCountdown() {
-      const now = new Date().getTime();
-      const distance = launchDate - now;
-
-      if (distance < 0) {
-        countdownEl.textContent = "LAUNCHED!";
-        return;
-      }
-
-      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-      const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-      const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-      countdownEl.textContent = `${days}d ${hours}h ${minutes}m ${seconds}s`;
-    }
-
-    // Update every second
-    setInterval(updateCountdown, 1000);
-    updateCountdown();
-  </script>
-</body>
-</html>
+      
