@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Mars Countdown - Simplified Test</title>
+  <title>Mars Countdown</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
   <!-- Importing Orbitron font from Google Fonts -->
@@ -48,8 +48,8 @@
     /* Glowing Mars-like planet */
     .mars {
       position: fixed;
-      top: 10%; /* Adjusted to place in top-left quadrant */
-      left: 10%; /* Adjusted to place in top-left quadrant */
+      top: 10%; /* Placed in top-left quadrant */
+      left: 10%; /* Placed in top-left quadrant */
       width: 300px; /* Increased size */
       height: 300px; /* Increased size */
       background: radial-gradient(circle at 30% 30%, #ff4500, #8b0000);
@@ -213,16 +213,42 @@
     animate();
   </script>
 
-  <!-- Simplified Countdown JavaScript for Testing -->
+  <!-- Countdown JavaScript -->
   <script>
+    // Define the launch date using a clear and unambiguous format
+    const launchDate = new Date('December 1, 2026 00:00:00'); // December 1, 2026, at 00:00:00
+
     const countdownEl = document.getElementById('countdown');
 
+    console.log('Countdown Script Loaded');
+    console.log('Launch Date:', launchDate);
+
     function updateCountdown() {
-      countdownEl.textContent = "10d 10h 10m 10s"; // Static countdown for testing
+      const now = new Date().getTime();
+      const distance = launchDate - now;
+
+      console.log('Current Time:', new Date(now));
+      console.log('Distance (ms):', distance);
+
+      if (distance < 0) {
+        countdownEl.textContent = "LAUNCHED!";
+        console.log('Countdown Complete');
+        clearInterval(countdownInterval); // Stop the interval when launched
+        return;
+      }
+
+      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+      console.log(`Countdown: ${days}d ${hours}h ${minutes}m ${seconds}s`);
+
+      countdownEl.textContent = `${days}d ${hours}h ${minutes}m ${seconds}s`;
     }
 
     // Update every second
-    setInterval(updateCountdown, 1000);
+    const countdownInterval = setInterval(updateCountdown, 1000);
     updateCountdown();
   </script>
 </body>
