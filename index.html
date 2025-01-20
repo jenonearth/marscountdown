@@ -42,24 +42,24 @@
       left: 0;
       width: 100%;
       height: 100%;
-      z-index: -2; /* Behind both Mars and content */
+      z-index: -1; /* Make sure it's behind the countdown content */
     }
 
-    /* Glowing Mars-like planet */
+    /* Mars Planet Styling */
     .mars {
       position: fixed;
-      bottom: 10%;
-      right: 10%;
-      width: 200px;
-      height: 200px;
-      background: radial-gradient(circle at 30% 30%, #ff4500, #8b0000);
+      top: 20px;
+      left: 20px;
+      width: 120px;
+      height: 120px;
+      background: radial-gradient(circle at 40% 40%, #d67c3c, #b55a2f, #8c4421);
       border-radius: 50%;
-      box-shadow: 0 0 20px 10px rgba(255, 69, 0, 0.5);
-      z-index: -1; /* Behind content but above the starfield */
-      animation: rotateMars 20s linear infinite;
+      box-shadow: inset -5px -5px 15px rgba(0,0,0,0.5), 5px 5px 15px rgba(255, 165, 0, 0.3);
+      z-index: 0; /* Ensure it's above the starfield but below main content */
+      animation: rotateMars 20s linear infinite; /* Optional: Slow rotation */
     }
 
-    /* Optional: Mars rotation animation */
+    /* Optional Rotation Animation for Mars */
     @keyframes rotateMars {
       from {
         transform: rotate(0deg);
@@ -85,10 +85,8 @@
     /* Responsive adjustments */
     @media (max-width: 768px) {
       .mars {
-        width: 150px;
-        height: 150px;
-        bottom: 5%;
-        right: 5%;
+        width: 90px;
+        height: 90px;
       }
 
       h1 {
@@ -102,10 +100,8 @@
 
     @media (max-width: 480px) {
       .mars {
-        width: 100px;
-        height: 100px;
-        bottom: 5%;
-        right: 5%;
+        width: 70px;
+        height: 70px;
       }
 
       h1 {
@@ -122,7 +118,7 @@
   <!-- Starfield Canvas -->
   <canvas id="starfield"></canvas>
 
-  <!-- Glowing Mars-like Planet -->
+  <!-- Mars Planet -->
   <div class="mars"></div>
 
   <!-- Main Content -->
