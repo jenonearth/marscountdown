@@ -17,11 +17,11 @@
     html, body {
       margin: 0;
       padding: 0;
-      overflow: hidden; /* Prevent scrollbars if the starfield extends beyond window */
+      overflow: hidden; /* Prevent scrollbars */
       width: 100%;
       height: 100%;
       font-family: 'Orbitron', sans-serif; /* A futuristic Google Font */
-      background: #000; /* Black background for space */
+      background: #000; /* Fallback background */
       position: relative;
       z-index: 1; /* Ensure content is above the starfield */
     }
@@ -48,14 +48,14 @@
     h1 {
       font-size: 3rem;
       margin-bottom: 20px;
-      text-shadow: 0 0 5px #0ff, 0 0 10px #0ff, 0 0 20px #0ff;
+      text-shadow: 0 0 3px rgba(0, 255, 255, 0.6), 0 0 6px rgba(0, 255, 255, 0.4); /* Reduced glow */
       text-align: center;
     }
 
     #countdown {
       font-size: 3rem;
       text-align: center;
-      text-shadow: 0 0 5px #0ff, 0 0 10px #0ff, 0 0 20px #0ff;
+      text-shadow: 0 0 3px rgba(0, 255, 255, 0.6), 0 0 6px rgba(0, 255, 255, 0.4); /* Reduced glow */
     }
   </style>
 </head>
@@ -151,21 +151,17 @@
       const now = new Date().getTime();
       const distance = launchDate - now;
 
-      // Time calculations
+      if (distance < 0) {
+        countdownEl.textContent = "LAUNCHED!";
+        return;
+      }
+
       const days = Math.floor(distance / (1000 * 60 * 60 * 24));
       const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
       const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
       const seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-      // Display
-      countdownEl.textContent = `
-        ${days}d ${hours}h ${minutes}m ${seconds}s
-      `;
-
-      // If the count down is over, display something else
-      if (distance < 0) {
-        countdownEl.textContent = "LAUNCHED!";
-      }
+      countdownEl.textContent = `${days}d ${hours}h ${minutes}m ${seconds}s`;
     }
 
     // Update every second
