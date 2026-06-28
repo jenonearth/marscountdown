@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Mars countdown icon">
+  <rect width="64" height="64" rx="12" fill="#07080c"/>
+  <circle cx="36" cy="28" r="17" fill="#c85f42"/>
+  <path d="M22 25c9 2 17-7 30-2M20 34c12-4 21 5 33 0" fill="none" stroke="#f0c36d" stroke-width="3" stroke-linecap="round" opacity=".72"/>
+  <path d="M10 48c15-13 30-13 45 0" fill="none" stroke="#75d1c3" stroke-width="2" stroke-linecap="round" opacity=".8"/>
+</svg>

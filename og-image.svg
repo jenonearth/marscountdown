@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" role="img" aria-label="Mars: The Next Window">
+  <defs>
+    <radialGradient id="mars" cx="35%" cy="30%">
+      <stop offset="0" stop-color="#f1b070"/>
+      <stop offset=".42" stop-color="#c85f42"/>
+      <stop offset="1" stop-color="#4b2425"/>
+    </radialGradient>
+    <linearGradient id="bg" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0" stop-color="#07080c"/>
+      <stop offset=".58" stop-color="#101018"/>
+      <stop offset="1" stop-color="#160d0b"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <circle cx="945" cy="220" r="210" fill="url(#mars)"/>
+  <path d="M110 190c240-55 520-12 975 160" fill="none" stroke="#f0c36d" stroke-width="3" opacity=".42"/>
+  <path d="M90 305c310 76 610 70 1000-35" fill="none" stroke="#75d1c3" stroke-width="2" opacity=".34"/>
+  <text x="88" y="208" fill="#f0c36d" font-family="Arial, sans-serif" font-size="28" font-weight="700" letter-spacing="8">SPACEX MARS TRACKER</text>
+  <text x="86" y="338" fill="#f4efe7" font-family="Georgia, serif" font-size="86" font-weight="700">MARS: THE</text>
+  <text x="86" y="430" fill="#f4efe7" font-family="Georgia, serif" font-size="86" font-weight="700">NEXT WINDOW</text>
+  <text x="90" y="500" fill="#b9b0a8" font-family="Arial, sans-serif" font-size="32">Earliest plausible Starship Mars window: Late 2028</text>
+</svg>

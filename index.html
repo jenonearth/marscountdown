@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>MARS: THE NEXT WINDOW</title>
+    <meta
+      name="description"
+      content="Tracking the earliest publicly stated opportunity for a Starship cargo mission to Mars, using late 2028 as a planning estimate rather than a confirmed launch date."
+    >
+    <meta name="theme-color" content="#090b10">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="MARS: THE NEXT WINDOW">
+    <meta
+      property="og:description"
+      content="A factual SpaceX Mars mission tracker for the earliest publicly stated Starship cargo opportunity."
+    >
+    <meta property="og:url" content="https://marscountdown.org/">
+    <meta property="og:image" content="https://marscountdown.org/og-image.svg">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="MARS: THE NEXT WINDOW">
+    <meta
+      name="twitter:description"
+      content="Tracking the earliest publicly stated opportunity for a Starship cargo mission."
+    >
+    <meta name="twitter:image" content="https://marscountdown.org/og-image.svg">
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="/styles.css">
+    <script src="/app.js" defer></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+
+    <main id="main">
+      <section class="hero" aria-labelledby="hero-title">
+        <div class="orbital-field" aria-hidden="true">
+          <span class="mars-disc"></span>
+          <span class="window-line window-line-one"></span>
+          <span class="window-line window-line-two"></span>
+        </div>
+
+        <div class="hero-content">
+          <p class="eyebrow">SpaceX Mars Tracker</p>
+          <h1 id="hero-title">MARS: THE NEXT WINDOW</h1>
+          <p class="subtitle">Tracking the earliest publicly stated opportunity for a Starship cargo mission.</p>
+
+          <section class="countdown-panel" aria-labelledby="countdown-label">
+            <div class="countdown-heading">
+              <p id="countdown-label">EARLIEST PLAUSIBLE STARSHIP MARS WINDOW</p>
+              <p class="target-display" data-content="targetDisplay">Late 2028</p>
+            </div>
+
+            <div class="countdown-grid" aria-live="polite" aria-label="Countdown to late 2028 planning estimate">
+              <div>
+                <strong data-countdown="days">000</strong>
+                <span>Days</span>
+              </div>
+              <div>
+                <strong data-countdown="hours">00</strong>
+                <span>Hours</span>
+              </div>
+              <div>
+                <strong data-countdown="minutes">00</strong>
+                <span>Minutes</span>
+              </div>
+              <div>
+                <strong data-countdown="seconds">00</strong>
+                <span>Seconds</span>
+              </div>
+            </div>
+
+            <p class="clock-status" data-content="clockStatus">
+              November 1, 2028 is a planning estimate, not a confirmed SpaceX launch date.
+            </p>
+          </section>
+        </div>
+      </section>
+
+      <section class="section-band" aria-labelledby="meaning-title">
+        <div class="section-inner two-column">
+          <div>
+            <p class="eyebrow">Interpretation</p>
+            <h2 id="meaning-title">What this clock means</h2>
+          </div>
+          <ul class="fact-list" data-list="clockMeaning"></ul>
+        </div>
+      </section>
+
+      <section class="section-inner readiness" aria-labelledby="readiness-title">
+        <div class="section-header">
+          <p class="eyebrow">Mission Readiness</p>
+          <h2 id="readiness-title">Public Milestones</h2>
+        </div>
+        <div class="timeline" data-list="missionStatus"></div>
+      </section>
+
+      <section class="section-band compact-explainer" aria-labelledby="windows-title">
+        <div class="section-inner two-column">
+          <div>
+            <p class="eyebrow">Launch Geometry</p>
+            <h2 id="windows-title">Why Mars windows matter</h2>
+          </div>
+          <p data-content="windowsExplainer"></p>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div>
+        <p><strong>Source:</strong> <a href="https://www.spacex.com/humanspaceflight/mars" rel="noopener">SpaceX Mission: Mars</a></p>
+        <p><strong>Last reviewed:</strong> <span data-content="lastReviewed">June 2026</span></p>
+        <p><strong>Last updated:</strong> <span data-content="lastUpdated">June 2026</span></p>
+      </div>
+      <p data-content="footerDisclaimer">Dates may change as SpaceX updates its plans.</p>
+    </footer>
+  </body>
+</html>
